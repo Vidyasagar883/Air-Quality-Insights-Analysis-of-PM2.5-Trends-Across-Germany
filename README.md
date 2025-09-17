@@ -5,12 +5,12 @@ MySQL database project analyzing PM2.5 air quality trends across German states a
 **PostgreSQL database project analyzing PM2.5 air quality trends across German states and stations.**
 
 ## Description
-- This project is about storing and analyzing air-quality data for different states in Germany.
-- It keeps information about:
-- States – all the German states where the air is being monitored.
-- Stations – air-quality monitoring stations with details like code, name, location type, and type of station.
-- Air-quality measurements – yearly readings of pollutants such as PM2.5 for each station.
-- The database lets you bring all the raw data into one place, clean it, and then run useful SQL queries to learn about pollution levels and trends..
+This project is about storing and analyzing air-quality data for different states in Germany.
+It keeps information about:
+States – (all the German states where the air is being monitored .)
+Stations – (air-quality monitoring stations with details like code, name, location type, and type of station.)
+Air-quality measurements – (yearly readings of pollutants such as PM2.5 for each station.)
+The database lets you bring all the raw data into one place, clean it, and then run useful SQL queries to learn about pollution levels and trends..
 
 ## Objectives
   - Organize Germany’s air-quality data into a clear database with states, stations, and yearly measurements.
