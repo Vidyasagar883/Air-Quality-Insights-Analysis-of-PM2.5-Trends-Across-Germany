@@ -64,7 +64,7 @@ CREATE TABLE air_quality_measurements (
 );
 
 
--- Temp table with states
+-- Temp table with stations data
 
 CREATE TABLE  temp_stations (
 state_name VARCHAR(50),
