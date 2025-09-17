@@ -157,17 +157,9 @@ FROM
 states s JOIN stations st ON s.state_id=st.state_id
 GROUP BY 1 
 ORDER BY 2 DESC LIMIT 5;
-```
-**Q6. Are there any states without any PM2.5 monitoring stations?**
-```sql
-SELECT s.name ,COUNT(DISTINCT st.station_code) AS No_Of_stations
-FROM states s 
-JOIN stations st ON s.state_id=st.state_id
-GROUP BY 1
-HAVING COUNT(DISTINCT st.station_code)  IS NULL;
-```
-**Q7. which state has the Highest Number of stations.**
-```sql
+
+         OR
+
 SELECT State, Highest_No_of_stations
 FROM (
 SELECT s.name AS State,
@@ -178,7 +170,16 @@ GROUP BY s.name
 ) ranked
 WHERE t_rank=1;
 ```
-**Q8. Which station in each state has the highest average PM2.5 concentration in 2023?**
+**Q6. Are there any states without any PM2.5 monitoring stations?**
+```sql
+SELECT s.name ,COUNT(DISTINCT st.station_code) AS No_Of_stations
+FROM states s 
+JOIN stations st ON s.state_id=st.state_id
+GROUP BY 1
+HAVING COUNT(DISTINCT st.station_code)  IS NULL;
+```
+
+**Q7. Which station in each state has the highest average PM2.5 concentration in 2023?**
 ```sql
 SELECT s.name,
 st.station_name,
@@ -193,7 +194,7 @@ HAVING a.year=2023
 ORDER BY 3 ;
 ```
 
-**Q9. Which type of monitoring setting experiences the worst PM2.5 pollution levels?**
+**Q8. Which type of monitoring setting experiences the worst PM2.5 pollution levels?**
 ```sql
 SELECT st.station_setting AS station_setting,
 MAX(a.annual_mean_value_ug_m³) as Highest_value
