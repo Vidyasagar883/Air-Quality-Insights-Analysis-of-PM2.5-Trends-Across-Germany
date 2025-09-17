@@ -231,7 +231,7 @@ WHERE s1.state_id =(select s.state_id FROM states s WHERE s.name='Hamburg');
 
 
 ## How to Use
-1. Set up a PostgreSQL database.
+1. Set up a MySQL database.
 2. Run `schema.sql` to create tables and relationships.
 3. Import sample CSV files into respective tables.
 4. Run `queries.sql` to explore PM2.5 trends and insights.
