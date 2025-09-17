@@ -227,6 +227,80 @@ FROM states s1 JOIN stations st ON s1.state_id=st.state_id JOIN
 air_quality_measurements a  ON a.station_id=st.station_id
 WHERE s1.state_id =(select s.state_id FROM states s WHERE s.name='Hamburg');
 ```
+**Q10.In the most recent year, show all states with the highest recorded PM2.5?**
+```sql
+SELECT 
+    s.name AS state_name,
+    MAX(a.annual_mean_value_ug_m³) AS highest_average_PM25,
+    (SELECT MAX(year) FROM air_quality_measurements) AS Most_recent_year
+FROM states s
+JOIN stations st ON s.state_id = st.state_id
+JOIN air_quality_measurements a ON st.station_id = a.station_id
+WHERE a.year = (SELECT MAX(year) FROM air_quality_measurements)
+GROUP BY s.name
+ORDER BY highest_average_PM25 DESC
+LIMIT 1;
+```
+ **Q11 Which are the top 5 most polluted PM2.5 stations in the latest year?**
+```sql
+SELECT 
+    st.station_name AS station_name,
+    MAX(a.annual_mean_value_ug_m³) AS highest_average_PM25,
+    (SELECT MAX(year) FROM air_quality_measurements) AS Most_recent_year
+FROM stations st
+JOIN air_quality_measurements a ON st.station_id = a.station_id
+WHERE a.year = (SELECT MAX(year) FROM air_quality_measurements)
+GROUP BY st.station_name
+ORDER BY highest_average_PM25 DESC
+LIMIT 5;
+```
+**Q12 Which are the top 5 cleanest PM2.5 stations in the latest year?**
+```sql
+SELECT st.station_name AS TOP_Clean_Stations
+FROM Stations st
+JOIN air_quality_measurements a ON st.station_id=a.station_id
+WHERE a.year=(SELECT MAX(year) FROM air_quality_measurements)
+ORDER BY a.annual_mean_value_ug_m³ ASC
+LIMIT 5;
+```
+**Q13 Which station type tend to exceed WHO guideline levels(5) more often?**
+```sql
+SELECT st.station_type ,
+SUM(CASE WHEN a.annual_mean_value_ug_m³>5 THEN 1 ELSE 0 END) AS Exceed_count,
+COUNT(*) AS Total_Count ,
+ROUND(100*(SUM(CASE WHEN a.annual_mean_value_ug_m³>5 THEN 1 ELSE 0 END))/COUNT(*),2) AS Exceed_Percent
+FROM stations st 
+JOIN air_quality_measurements a ON st.station_id=a.station_id
+GROUP BY 1;
+```	
+**Q14.How many stations exceeded the WHO annual PM2.5 guideline value (5 µg/m³) in the last year(2024)?**
+```sql
+SELECT COUNT(DISTINCT st.station_id) AS Total_Stations
+FROM stations st 
+JOIN air_quality_measurements a
+ON st.station_id=a.station_id
+WHERE a.annual_mean_value_ug_m³>5
+AND a.year=2024;
+```
+**Q15.How many exceeded the EU limit (25 µg/m³) in the last year?**
+```sql
+SELECT COUNT(DISTINCT st.station_id) AS Total_Stations
+FROM stations st 
+JOIN air_quality_measurements a
+ON st.station_id=a.station_id
+WHERE a.annual_mean_value_ug_m³>25
+AND a.year=2024;
+```
+**Q16 Which stations repeatedly exceed PM2.5 guidelines year after year?**
+```sql
+SELECT st.station_name
+FROM stations st JOIN air_quality_measurements a ON
+st.station_id=a.station_id
+WHERE a.year IN(2021,2022,2023,2024) 
+AND a.annual_mean_value_ug_m³>25
+GROUP BY 1
+HAVING COUNT(DISTINCT a.year)=4;
+```
 
 
 
