@@ -14,5 +14,5 @@ variables:
 
 steps:
 - script: |
-    mysql -h $(DB_HOST) -P $(DB_PORT) -u $(DB_USER) -p$(DB_PASSWORD) $(DB_NAME) < sql_queries_air_quality.sql
+    mysql -h $(DB_HOST) -P $(DB_PORT) -u $(DB_USER) -p$(DB_PASSWORD) $(DB_NAME)
   displayName: 'Insert State into MySQL'
