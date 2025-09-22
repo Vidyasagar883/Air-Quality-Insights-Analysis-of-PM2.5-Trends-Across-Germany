@@ -6,7 +6,7 @@ state_id INT PRIMARY KEY AUTO_INCREMENT,
 name VARCHAR(40) NOT NULL
 );
 
-CREATE TABLE Stations (
+CREATE TABLE IF NOT EXISTS Stations (
 station_id INT PRIMARY KEY AUTO_INCREMENT,
 station_code VARCHAR(20) UNIQUE NOT NULL,
 station_name VARCHAR(50) NOT NULL,
@@ -17,7 +17,7 @@ FOREIGN KEY (state_id) REFERENCES States(state_id)
 );
 
 
-CREATE TABLE air_quality_measurements (
+CREATE TABLE IF NOT EXISTS air_quality_measurements (
     measurement_id INT AUTO_INCREMENT PRIMARY KEY,
     station_id INT NOT NULL,                     
     year YEAR NOT NULL,
@@ -29,7 +29,7 @@ CREATE TABLE air_quality_measurements (
 
 -- Temp table with states
 
-CREATE TABLE  temp_stations (
+CREATE TABLE IF NOT EXISTS temp_stations (
 state_name VARCHAR(50),
 station_name VARCHAR(50),
 station_code VARCHAR(20) UNIQUE,
@@ -37,7 +37,7 @@ Station_setting VARCHAR(30),
 Station_type VARCHAR(40)
 );
 -- Temporary table with raw data
-CREATE TABLE raw_air_quality (
+CREATE TABLE IF NOT EXISTS raw_air_quality (
     station_code VARCHAR(20),
     year YEAR,
     pollutant_code VARCHAR(20),
