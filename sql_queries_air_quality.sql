@@ -64,7 +64,7 @@ INSERT INTO states (name) VALUES
 ('UBA');
 
 -- INSERTING INTO STATIONS 
-INSERT  INTO stations
+INSERT IGNORE INTO stations
     (station_code, station_name, state_id, station_setting, station_type)
 SELECT t.station_code,
        t.station_name,
@@ -76,7 +76,7 @@ JOIN states s ON s.name = t.state_name;
 
 --  INSERTING INTO air_quality_measurements
 
-INSERT INTO air_quality_measurements 
+INSERT IGNORE INTO air_quality_measurements 
 (station_id, year, pollutant_code, annual_mean_value_ug_m³)
 SELECT 
 s.station_id, r.year, r.pollutant_code, r.annual_mean_value_ug_m³
