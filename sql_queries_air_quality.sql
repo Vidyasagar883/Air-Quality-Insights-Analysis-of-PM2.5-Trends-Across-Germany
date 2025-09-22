@@ -272,5 +272,6 @@ AND a.annual_mean_value_ug_m³>25
 GROUP BY 1
 HAVING COUNT(DISTINCT a.year)=4;
 
-
+SELECT * FROM air_quality_measurements WHERE annual_mean_value_ug_m³ 
+=(SELECT MAX(annual_mean_value_ug_m³) FROM air_quality_measurements);
  
