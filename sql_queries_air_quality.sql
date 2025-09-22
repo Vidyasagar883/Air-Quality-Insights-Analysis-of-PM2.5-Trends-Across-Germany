@@ -1,50 +1,63 @@
+
+-- 1 .Create Database
+
 CREATE DATABASE IF NOT EXISTS Germany_Air_Quality;
 USE Germany_Air_Quality;
 
-CREATE TABLE IF NOT EXISTS states(
-state_id INT PRIMARY KEY AUTO_INCREMENT,
-name VARCHAR(40) NOT NULL
+
+-- 2. Create Tables
+
+
+-- States table
+CREATE TABLE IF NOT EXISTS states (
+    state_id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(40) NOT NULL UNIQUE
 );
 
-CREATE TABLE IF NOT EXISTS Stations (
-station_id INT PRIMARY KEY AUTO_INCREMENT,
-station_code VARCHAR(20) UNIQUE NOT NULL,
-station_name VARCHAR(50) NOT NULL,
-state_id INT NOT NULL,
-station_setting VARCHAR(50),
-station_type VARCHAR(50),
-FOREIGN KEY (state_id) REFERENCES States(state_id)
+-- Stations table
+CREATE TABLE IF NOT EXISTS stations (
+    station_id INT PRIMARY KEY AUTO_INCREMENT,
+    station_code VARCHAR(20) NOT NULL UNIQUE,
+    station_name VARCHAR(50) NOT NULL,
+    state_id INT NOT NULL,
+    station_setting VARCHAR(50),
+    station_type VARCHAR(50),
+    FOREIGN KEY (state_id) REFERENCES states(state_id)
 );
 
-
+-- Air quality measurements table
 CREATE TABLE IF NOT EXISTS air_quality_measurements (
     measurement_id INT AUTO_INCREMENT PRIMARY KEY,
-    station_id INT NOT NULL,                     
+    station_id INT NOT NULL,
     year YEAR NOT NULL,
-    pollutant_code VARCHAR(20) NOT NULL,        
-    annual_mean_value_ug_m³   FLOAT,
-    FOREIGN KEY (station_id) REFERENCES Stations(station_id)
+    pollutant_code VARCHAR(20) NOT NULL,
+    annual_mean_value_ug_m3 FLOAT,
+    FOREIGN KEY (station_id) REFERENCES stations(station_id),
+    UNIQUE KEY uniq_measurement (station_id, year, pollutant_code)
 );
 
-
--- Temp table with states
-
+-- Temp table for stations
 CREATE TABLE IF NOT EXISTS temp_stations (
-state_name VARCHAR(50),
-station_name VARCHAR(50),
-station_code VARCHAR(20) UNIQUE,
-Station_setting VARCHAR(30),
-Station_type VARCHAR(40)
+    state_name VARCHAR(50),
+    station_name VARCHAR(50),
+    station_code VARCHAR(20) UNIQUE,
+    station_setting VARCHAR(30),
+    station_type VARCHAR(40)
 );
--- Temporary table with raw data
+
+-- Temporary table for raw air quality data
 CREATE TABLE IF NOT EXISTS raw_air_quality (
     station_code VARCHAR(20),
     year YEAR,
     pollutant_code VARCHAR(20),
-    annual_mean_value_ug_m³   FLOAT
+    annual_mean_value_ug_m3 FLOAT
 );
 
-INSERT INTO states (name) VALUES
+
+-- 3.Insert States
+
+INSERT INTO states (name)
+VALUES
 ('Baden-Württemberg'),
 ('Bavaria'),
 ('Berlin'),
@@ -61,29 +74,36 @@ INSERT INTO states (name) VALUES
 ('Saxony-Anhalt'),
 ('Schleswig-Holstein'),
 ('Thuringia'),
-('UBA');
+('UBA')
+ON DUPLICATE KEY UPDATE name = VALUES(name);
 
--- INSERTING INTO STATIONS 
-INSERT IGNORE INTO stations
-    (station_code, station_name, state_id, station_setting, station_type)
+
+-- 4.Insert Stations (idempotent)
+
+INSERT INTO stations (station_code, station_name, state_id, station_setting, station_type)
 SELECT t.station_code,
        t.station_name,
        s.state_id,
        t.station_setting,
        t.station_type
 FROM temp_stations t
-JOIN states s ON s.name = t.state_name;
+JOIN states s ON s.name = t.state_name
+ON DUPLICATE KEY UPDATE
+station_name = VALUES(station_name),
+state_id = VALUES(state_id),
+station_setting = VALUES(station_setting),
+station_type = VALUES(station_type);
 
---  INSERTING INTO air_quality_measurements
 
-INSERT IGNORE INTO air_quality_measurements 
-(station_id, year, pollutant_code, annual_mean_value_ug_m³)
-SELECT 
-s.station_id, r.year, r.pollutant_code, r.annual_mean_value_ug_m³
-FROM 
-raw_air_quality r
-JOIN 
-Stations s ON r.station_code = s.station_code;
+-- 5.Insert Air Quality Measurements 
+
+INSERT INTO air_quality_measurements (station_id, year, pollutant_code, annual_mean_value_ug_m3)
+SELECT s.station_id, r.year, r.pollutant_code, r.annual_mean_value_ug_m3
+FROM raw_air_quality r
+JOIN stations s ON r.station_code = s.station_code
+ON DUPLICATE KEY UPDATE
+annual_mean_value_ug_m3 = VALUES(annual_mean_value_ug_m3);
+
 
 -- RETRIEVING THE DATA 	
 -- Q1.Show the details of the station with code DEHH064.
