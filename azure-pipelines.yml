@@ -7,13 +7,12 @@ trigger:
 - main
 
 pool:
-  SelfHostedLocal
+  name: SelfHostedLocal   # your Windows self-hosted agent
+
+variables:
+- group: New variable group 22-Sep  # contains DB_HOST, DB_USER, DB_PASSWORD, DB_NAME
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
 - script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+    mysql -h $(DB_HOST) -P $(DB_PORT) -u $(DB_USER) -p$(DB_PASSWORD) $(DB_NAME) < insert_states.sql
+  displayName: 'Insert State into MySQL'
