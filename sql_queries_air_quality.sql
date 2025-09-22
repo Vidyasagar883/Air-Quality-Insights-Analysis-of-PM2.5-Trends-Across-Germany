@@ -1,4 +1,4 @@
-CREATE DATABASE Germany_Air_Quality;
+CREATE DATABASE IF NOT EXISTS Germany_Air_Quality;
 USE Germany_Air_Quality;
 
 CREATE TABLE states(
