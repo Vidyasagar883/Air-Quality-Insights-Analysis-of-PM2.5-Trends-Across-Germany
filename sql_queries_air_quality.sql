@@ -1,7 +1,7 @@
 CREATE DATABASE IF NOT EXISTS Germany_Air_Quality;
 USE Germany_Air_Quality;
 
-CREATE TABLE states(
+CREATE TABLE IF NOT EXISTS states(
 state_id INT PRIMARY KEY AUTO_INCREMENT,
 name VARCHAR(40) NOT NULL
 );
