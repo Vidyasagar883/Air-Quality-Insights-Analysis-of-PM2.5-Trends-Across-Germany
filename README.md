@@ -130,16 +130,13 @@ Stations s ON r.station_code = s.station_code;
 ```
 
 **Fixing Mis-encoded Station Names in MySQL**
-Problem: Some station names in the stations table were mis-encoded, showing LÃ¼beck-St. JÃ¼rgen instead of Lübeck-St. Jürgen
+ Problem: Some station names in the stations table were mis-encoded, showing LÃ¼beck-St. JÃ¼rgen instead of Lübeck-St. Jürgen
 Approach:
 
-## 1.Added a temporary column to store corrected values.
-
-## 2.Used CONVERT and CAST to re-interpret the mis-encoded text as UTF-8.
-
-## 3.erified the fixed values before updating the original column.
-
-## 4.Replaced the original column with the corrected data and removed the temporary column.
+  1.Added a temporary column to store corrected values.
+  2.Used CONVERT and CAST to re-interpret the mis-encoded text as UTF-8.
+  3.erified the fixed values before updating the original column.
+  4.Replaced the original column with the corrected data and removed the temporary column.
 
 ```sql
 ALTER TABLE stations ADD COLUMN temp_name VARCHAR(255) DEFAULT NULL;
