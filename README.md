@@ -128,6 +128,33 @@ raw_air_quality r
 JOIN 
 Stations s ON r.station_code = s.station_code;
 ```
+
+**Fixing Mis-encoded Station Names in MySQL**
+Problem: Some station names in the stations table were mis-encoded, showing LÃ¼beck-St. JÃ¼rgen instead of Lübeck-St. Jürgen
+Approach:
+
+## 1.Added a temporary column to store corrected values.
+
+## 2.Used CONVERT and CAST to re-interpret the mis-encoded text as UTF-8.
+
+## 3.erified the fixed values before updating the original column.
+
+## 4.Replaced the original column with the corrected data and removed the temporary column.
+
+```sql
+ALTER TABLE stations ADD COLUMN temp_name VARCHAR(255) DEFAULT NULL;
+
+UPDATE stations
+SET temp_name = CONVERT(CAST(CONVERT(station_name USING latin1) AS BINARY) USING utf8mb4)
+WHERE station_name LIKE '%Ã%';
+
+SELECT station_name, temp_name FROM stations WHERE temp_name IS NOT NULL;
+
+UPDATE stations SET station_name = temp_name WHERE temp_name IS NOT NULL;
+
+ALTER TABLE stations DROP COLUMN temp_name;
+```
+
  **RETRIEVING THE DATA** 	
  **Q1.Show the details of the station with code DEHH064.**
 ```sql
