@@ -15,7 +15,7 @@ It integrates data engineering (MySQL schema design, data cleaning, transformati
 - Imported data into temporary MySQL tables for transformation.
 
 ### 2. Database Design
-Snowflake-style schema:  
+Simple/Basic Snowflake-style schema:  
 - `states` – German states  
 - `stations` – Monitoring stations metadata  
 - `air_quality_measurements` – Annual PM2.5 readings  
