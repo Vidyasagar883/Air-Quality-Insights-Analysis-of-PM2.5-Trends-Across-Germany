@@ -1,28 +1,60 @@
 # Air-Quality-Insights-Analysis-of-PM2.5-Trends-Across-Germany
-MySQL database project analyzing PM2.5 air quality trends across German states and stations.
-# Germany Air Quality Analysis
+MySQL database and Power BI reporting project for analyzing PM2.5 air quality trends across German states and stations.
 
-**PostgreSQL database project analyzing PM2.5 air quality trends across German states and stations.**
 
-## Description
-This project is about storing and analyzing air-quality data for different states in Germany.
-It keeps information about:
-States – (all the German states where the air is being monitored .)
-Stations – (air-quality monitoring stations with details like code, name, location type, and type of station.)
-Air-quality measurements – (yearly readings of pollutants such as PM2.5 for each station.)
-The database lets you bring all the raw data into one place, clean it, and then run useful SQL queries to learn about pollution levels and trends..
+##  Dashboard Previe
 
-## Objectives
-  - Organize Germany’s air-quality data into a clear database with states, stations, and yearly measurements.
-  - Make it easy to find and compare air-pollution levels (for example PM2.5) across different states and years.
-  - Identify places or station types with the highest or lowest pollution.
-  - Check which stations or states exceed WHO and EU safety limits.
-  - Help people and policy makers see trends in air quality so they can plan actions to improve it.
+## Project Overview
+This project tracks and analyzes PM2.5 air-quality levels across Germany from 2021 to 2024.
+It integrates data engineering (MySQL schema design, data cleaning, transformations) and data visualization (Power BI dashboards) to uncover pollution trends, compliance issues, and performance insights.
+## Project Workflow
 
+### 1. Data Collection & Preparation
+- Downloaded official datasets from [UBA](https://www.umweltbundesamt.de/en/topics/air/measuringobservingmonitoring/air-monitoring-networks).  
+- Cleaned CSV files for states, stations, and PM2.5 readings.  
+- Imported data into temporary MySQL tables for transformation.
+
+### 2. Database Design
+Snowflake-style schema:  
+- `states` – German states  
+- `stations` – Monitoring stations metadata  
+- `air_quality_measurements` – Annual PM2.5 readings  
+- Temporary tables: `temp_stations`, `raw_air_quality`
+
+### 3. Data Cleaning & Transformation
+- Fixed UTF-8 encoding issues (e.g., “LÃ¼beck” → “Lübeck”).  
+- Created **views** for yearly averages, compliance summaries, and rankings.  
+- Built **stored procedures** for automated yearly reports.
+
+### 4. Analysis (SQL)
+- Rank polluted and cleanest stations.  
+- Detect stations exceeding WHO (5 µg/m³) and EU (25 µg/m³) guidelines.  
+- Multi-year trend analysis and network coverage by state.
+
+### 5. Power BI Visualization
+- Heatmaps for WHO/EU compliance.  
+- Year-over-Year trend lines.  
+- Top/Bottom 5 performing states and stations.  
+- KPI cards for compliance.  
+- Dynamic slicers for year, state, and station type.
+
+---
+
+##  Key Features
+
+**Data-Driven Compliance & Benchmarking**  
+Interactive Power BI dashboard using DAX and conditional formatting to benchmark PM2.5 levels across states.
+
+**Scalable Data Modeling**  
+Snowflake-based schema ensures data integrity, efficient relationships, and scalable reporting.
+
+**Actionable Insights**  
+YoY trend visuals, rankings, and stored procedures reveal performance shifts and compliance patterns.
 ## Tech Stack
 - MySQL
 - SQL (DDL, DML, JOINs, GROUP BY, HAVING, Window functions)
 - Data analysis
+- Power BI Reports
 
 ## Database Schema
 - `states` – List of German states
@@ -32,9 +64,10 @@ The database lets you bring all the raw data into one place, clean it, and then 
 - `raw_air_quality` – Temporary table for raw measurement data
 
 ## Sample Data
-The repository includes sample CSV files to replicate the database setup:
+The repository includes sample CSV files to replicate the database setup , data is taken from official german air quality measurements website https://www.umweltbundesamt.de/en/topics/air/measuringobservingmonitoring/air-monitoring-networks.
 - `stations.csv`
 - `Annual-tabulation_Particulate matter_PM2.5.csv`
+- `States.csv`
 
 ## Queries and Analysis
 The project includes SQL scripts to extract meaningful insights:
@@ -329,18 +362,57 @@ WHERE a.year IN(2021,2022,2023,2024)
 AND a.annual_mean_value_ug_m³>25
 GROUP BY 1
 HAVING COUNT(DISTINCT a.year)=4;
+
 ```
 
+## 📊 Power BI Dashboard Highlights
+- **Heatmaps**: Regional compliance against WHO and EU PM2.5 limits.  
+- **Year-over-Year Trends**: Track PM2.5 levels across years.  
+- **Rankings**: Top and bottom performing stations and states.  
+- **KPI Cards**: Quick view of WHO/EU guideline exceedances.  
+- **Interactive Slicers**: Filter by year, state, or station type.
 
+---
 
-## How to Use
-1. Set up a MySQL database.
-2. Run `schema.sql` to create tables and relationships.
-3. Import sample CSV files into respective tables.
-4. Run `queries.sql` to explore PM2.5 trends and insights.
+## ⚙️ Tech Stack
+- **Database:** MySQL  
+- **Visualization:** Power BI  
+- **Languages:** SQL, DAX  
+- **Techniques:** Views, stored procedures, data cleaning, transformation, analytical querying, interactive dashboards
+
+---
+
+## 📂 Data Source
+Official German Environment Agency (UBA):  
+[https://www.umweltbundesamt.de/en/topics/air/measuringobservingmonitoring/air-monitoring-networks]
+
+Sample CSVs included for replication:  
+- `stations.csv`  
+- `Annual-tabulation_Particulate matter_PM2.5.csv`  
+- `states.csv`
+
+---
+
+## 📈 Results & Insights
+- PM2.5 levels vary sharply between industrial and rural regions.  
+- Multiple urban stations exceed WHO’s 5 µg/m³ guideline.  
+- EU compliance is stable; WHO compliance is still low in dense regions.  
+- Power BI dashboards make non-compliance instantly visible.
+
+---
+
+## ✅ Summary
+End-to-end project showcasing:  
+- Database design & normalization  
+- Data cleaning & transformation  
+- Views & stored procedures  
+- SQL analysis & reporting  
+- Dynamic Power BI dashboards for decision-making
+
 
 ## Data Source
 Official German environmental data from the [German Environment Agency (UBA)](https://www.umweltbundesamt.de/en).
 
 ## Author Vidyasagar Panugothu
+## LinkedIn; https://www.linkedin.com/in/vidyasagar-panugothu/
 
