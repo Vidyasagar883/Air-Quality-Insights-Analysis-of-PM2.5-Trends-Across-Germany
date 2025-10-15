@@ -20,6 +20,7 @@ Snowflake-style schema:
 - `stations` – Monitoring stations metadata  
 - `air_quality_measurements` – Annual PM2.5 readings  
 - Temporary tables: `temp_stations`, `raw_air_quality`
+![ERD Preview](ERD.png)
 
 ### 3. Data Cleaning , Views & Stored Procedures
 - Fixed UTF-8 encoding issues (e.g., “LÃ¼beck” → “Lübeck”).  
