@@ -21,10 +21,12 @@ Snowflake-style schema:
 - `air_quality_measurements` – Annual PM2.5 readings  
 - Temporary tables: `temp_stations`, `raw_air_quality`
 
-### 3. Data Cleaning & Transformation
+### 3. Data Cleaning , Views & Stored Procedures
 - Fixed UTF-8 encoding issues (e.g., “LÃ¼beck” → “Lübeck”).  
-- Created **views** for yearly averages, compliance summaries, and rankings.  
-- Built **stored procedures** for automated yearly reports.
+- Used Views to simplify analysis of PM2.5 trends and compliance.  
+- Created Stored Procedures for automated reporting, like top polluted stations and WHO guideline checks.  
+> Full SQL scripts are in the repository.
+
 
 ### 4. Analysis (SQL)
 - Rank polluted and cleanest stations.  
