@@ -2,7 +2,7 @@
 MySQL database and Power BI reporting project for analyzing PM2.5 air quality trends across German states and stations.
 
 
-##  Dashboard Previe
+##  Dashboard Preview
 
 ## Project Overview
 This project tracks and analyzes PM2.5 air-quality levels across Germany from 2021 to 2024.
@@ -365,7 +365,7 @@ HAVING COUNT(DISTINCT a.year)=4;
 
 ```
 
-## 📊 Power BI Dashboard Highlights
+##  Power BI Dashboard Highlights
 - **Heatmaps**: Regional compliance against WHO and EU PM2.5 limits.  
 - **Year-over-Year Trends**: Track PM2.5 levels across years.  
 - **Rankings**: Top and bottom performing stations and states.  
@@ -374,7 +374,7 @@ HAVING COUNT(DISTINCT a.year)=4;
 
 ---
 
-## ⚙️ Tech Stack
+## Tech Stack
 - **Database:** MySQL  
 - **Visualization:** Power BI  
 - **Languages:** SQL, DAX  
@@ -382,7 +382,7 @@ HAVING COUNT(DISTINCT a.year)=4;
 
 ---
 
-## 📂 Data Source
+##  Data Source
 Official German Environment Agency (UBA):  
 [https://www.umweltbundesamt.de/en/topics/air/measuringobservingmonitoring/air-monitoring-networks]
 
@@ -393,7 +393,7 @@ Sample CSVs included for replication:
 
 ---
 
-## 📈 Results & Insights
+## Results & Insights
 - PM2.5 levels vary sharply between industrial and rural regions.  
 - Multiple urban stations exceed WHO’s 5 µg/m³ guideline.  
 - EU compliance is stable; WHO compliance is still low in dense regions.  
@@ -401,7 +401,7 @@ Sample CSVs included for replication:
 
 ---
 
-## ✅ Summary
+## Summary
 End-to-end project showcasing:  
 - Database design & normalization  
 - Data cleaning & transformation  
@@ -413,6 +413,6 @@ End-to-end project showcasing:
 ## Data Source
 Official German environmental data from the [German Environment Agency (UBA)](https://www.umweltbundesamt.de/en).
 
-## Author Vidyasagar Panugothu
-## LinkedIn; https://www.linkedin.com/in/vidyasagar-panugothu/
+ - Author Vidyasagar Panugothu
+ - LinkedIn; https://www.linkedin.com/in/vidyasagar-panugothu/
 
