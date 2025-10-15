@@ -3,7 +3,7 @@ MySQL database and Power BI reporting project for analyzing PM2.5 air quality tr
 
 
 ##  Dashboard Preview
-
+![Dashboard Preview](PowerBi_Reports/Overall_Report.PNG "Air Quality Power BI Report")
 ## Project Overview
 This project tracks and analyzes PM2.5 air-quality levels across Germany from 2021 to 2024.
 It integrates data engineering (MySQL schema design, data cleaning, transformations) and data visualization (Power BI dashboards) to uncover pollution trends, compliance issues, and performance insights.
